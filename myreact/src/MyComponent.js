@@ -2,7 +2,7 @@ import React,{Component} from 'react'; //특정 컴포넌트만 받으려면 ,{C
 
 // 리액트 컴포넌트는 HTML,CSS,Data(useState)로 이루어져 있다. 
 class MyComponent extends Component {
-    render() { // 이미 리액트 Component가 가지고 있는 render함수
+    render() { // 이미 리액트Component가 가지고 있는 render함수
         return (
             <h2>[This is imported from Component]</h2>
 
