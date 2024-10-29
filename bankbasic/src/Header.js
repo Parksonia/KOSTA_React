@@ -22,7 +22,7 @@ const Header = () => {
       <Navbar color="light" light expand="md">
         <NavbarBrand href="/"><i><b>Kosta Bank</b></i></NavbarBrand>
         <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar >
+        
           <Nav className="ml-auto" navbar >
             <NavItem>
               <NavLink href="/">로그인</NavLink>
@@ -53,7 +53,7 @@ const Header = () => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-        </Collapse>
+       
       </Navbar>
     </div>
   );

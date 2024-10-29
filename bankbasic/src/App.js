@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      <Header />{/*  고정되는거는 Routes에 포함시키지 않음 */}
+      <Header/>{/*  고정되는 컴포넌트는 Routes에 포함시키지 않음 */}
         <Routes>
           <Route exact path="/" element={<Login/>}></Route>
           <Route exact path="/join" element={<Join/>}></Route>
