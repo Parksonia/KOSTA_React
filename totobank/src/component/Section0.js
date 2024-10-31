@@ -11,7 +11,7 @@ export default function Section0() {
                     한 사람, 한 사람을 위해 시작한 은행<br/>
                     더 많은 사람들이 찾는 모두의 은행이 되었습니다.
                 </p>
-                <div style={{ backgroundColor: "#ffef6b" }} className='section0 store'> 
+                <div style={{opacity:"1"}} className='section0 store'> 
                 <div style={{padding:"20px", display:"inline-block", width:"280px", backgroundColor:"white", borderRadius:"10px"}}>
                     <img src="/img/m-home-google.png" width="30px" alt=""/>&nbsp;&nbsp;
                     <span className="section_sub1">Google Play</span>

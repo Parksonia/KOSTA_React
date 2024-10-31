@@ -1,15 +1,24 @@
 import {Table} from 'reactstrap'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 export default function AllAccountInfo(){
     //const style={width:'800px',margin:'0 auto'};
-    const accs =[
-                    {id:'1001',name:'홍길동',balance:10000,type:'일반계좌',grade:''},
-                    {id:'1002',name:'송길동',balance:20000,type:'특수계좌',grade:'VIP'},
-                    {id:'1003',name:'하길동',balance:30000,type:'특수계좌',grade:'Gold'},
-                    {id:'1004',name:'구길동',balance:40000,type:'특수계좌',grade:'Silver'},
-                    {id:'1001',name:'차길동',balance:50000,type:'일반계좌',grade:''}
-                    
-                ]
-        return(
+    const [accs,setAccs] = useState([]);
+    
+    useEffect(()=>{ //화면이 뜨자마자 데이터가 있어야 하니까 useEffect 사용 반드시 [] 가 있어야함
+        axios.get("http://localhost:8080/allAccountInfo")
+        .then(res=>{
+            console.log(res.data);
+            setAccs([...res.data]);
+        })
+        .catch(err=>{
+            console.log(err);
+            
+        })
+    },[])    
+    
+    
+    return(
         <div className='route'>
             <h4>전체 계좌 조회</h4>
             <Table bordered style={{width:'800px',margin:'0 auto'}}>  {/*{style}*/}  
