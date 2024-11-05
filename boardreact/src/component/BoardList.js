@@ -11,6 +11,17 @@ const BoardList=()=>{
     const [keyword,setKeyword] = useState('');
     
     const boardDelete=(num)=>{
+        axios.get(`${url}/boardDelete/${num}`)
+        .then(res=>{
+            //배열을 갱신시켜준다.
+            if(res.data===true) {
+                const remainBoard = boardList.filter(b=>b.num !==num); // target num 이 아닌것만 배열을 갱신시켜줌
+                setBoardList([...remainBoard]);
+            }
+        })
+        .catch(err=>{
+            console.log(err);
+        })
 
     }
 
@@ -57,7 +68,7 @@ const BoardList=()=>{
                     <Button onClick={()=>submit(1)}>검색</Button>
                 </Col>
                 <Col sm={3}>
-                    <Button tag="a" herf="/boardWrite" color='success'>글쓰기</Button>
+                    <Button tag="a" href="/boardWrite" color='success'>글쓰기</Button>
                 </Col>
             </FormGroup>
             <Table bordered style={{margin:"0 auto",width:"900px"}}>

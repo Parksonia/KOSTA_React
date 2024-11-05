@@ -1,5 +1,5 @@
 import {Table,Label,Input,Button} from 'reactstrap';
-import {useState} from 'react';
+import {useState,useRef,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { url } from '../config';
@@ -7,6 +7,7 @@ import { url } from '../config';
 const BoardWrite=()=>{
 
     const navigate = useNavigate();
+    const fRef = useRef();
     const divStyle={
         margin:'0 auto',
         width:'600px',
@@ -25,6 +26,13 @@ const BoardWrite=()=>{
         if(e.target.files.length>0) {
             setFileList([...fileList,e.target.files[0]]);//새로운 배열을 만들고([])기존 배열(fileList)을 엎어씀(...) , 새로운 값을 추가한 형태
         }
+    }
+    const fileClick =(e) =>{
+        fRef.current.click();
+    }
+    const deleteFile =(file) =>{
+        const reFileList  = fileList.filter(f=>f!==file);
+        setFileList([...reFileList]);
     }
     const submit=(e)=>{
         e.preventDefault();
@@ -87,12 +95,17 @@ const BoardWrite=()=>{
                         </td>
                         <td>
                             <img src="/plus.png" width="100px" height="100px" alt=''
-                            onClick={()=>document.getElementById('file').click()}/><br/><br/>
-                             <Input type="file" name="file" id="file" accept='image/*' onChange={fileChange} hidden/>
+                            // onClick ={()=>fRef.current.click()}/><br/><br/>
+                            onClick={()=>document.getElementById('file').click()}/><br/><br/> 
+                             <Input type="file" name="file" id="file" accept='image/*' onChange={fileChange} ref={fRef} hidden/>
                             {
                                 fileList.map((file,index)=>
                                   <span key={index}>
+                                    <div>
+                                    <img style={{display:"inline-block",width:"20px",height:"20px"}} src='/minus.png' alt=''
+                                                 onClick={()=> deleteFile(file)}/>
                                     <img src={URL.createObjectURL(file)} width="100px"alt='' style={{marginRight:"10px"}}/>
+                                    </div>
                                     {(index+1)%3===0 &&<><br/><br /></>}
                                 </span>   
                                 )    

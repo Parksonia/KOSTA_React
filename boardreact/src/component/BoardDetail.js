@@ -15,12 +15,25 @@ const BoardDetail=()=>{
         borderRadius:'7px',
         padding:'10px'
     }
+    const [heart,setHeart] = useState(false);
+    const heartClick =(e) => {
+        const param ={id:'박소연',num:board.num};
+        axios.post(`${url}/boardLike`,param)
+        .then(res=>{
+            setHeart(res.data);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    }
+
     // 화면 전환되자마자 데이터가 보여야함 
     useEffect(()=>{
         axios.get(`${url}/boardDetail/${num}`)
-        .then(res=>{
-             let resBoard = res.data;
-            setBoard({...res.data})
+        .then(res=>{ // data를 map형태로 받아옴 
+             let resBoard = res.data.board;
+            setBoard({...resBoard});
+            setHeart({...res.data.heart});
             if(resBoard.fileNums!==null && resBoard.fileNums.length !==0) {
                 setFileNumList([res.data.fileNums.split(",")]);
             }
@@ -64,8 +77,10 @@ const BoardDetail=()=>{
                         </tr>
                         <tr>
                             <td></td>
-                            <td><Button color='primary' tag="a" href="/">목록</Button></td>&nbsp;&nbsp;
-
+                            <td><Button color='primary' tag="a" href={`/modifyBoard/${board.num}`}>수정</Button>&nbsp;&nbsp;
+                            <Button color='primary' tag="a" href="/">목록</Button>&nbsp;&nbsp;
+                            <img src={heart===true? '/redheart.png':'/blackheart.png' } width='30px' alt='' onClick={heartClick}/>
+                            </td>
                         </tr>
                     
                     </tbody>
