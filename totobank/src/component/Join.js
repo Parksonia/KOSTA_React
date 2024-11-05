@@ -29,12 +29,14 @@ export default function Join() {
 
     const checkId =(e) =>{
         e.preventDefault();
-        axios.get(`http://localhost:8080/checkMemId/${member.id}`)
+        axios.get(`http://localhost:8082/checkMemId/${member.id}`)
         .then(res=>{
             if(res.data===true) {
                 alert("사용중인 아이디 입니다.");
+                
             }else {
-                alert("사용 가능한 아이디 입니다..");   
+                alert("사용 가능한 아이디 입니다.."); 
+                setIsCheckId(true);  
             }
            
         })
@@ -57,7 +59,7 @@ export default function Join() {
         }
         
 
-        axios.post("http://localhost:8080/join", member)
+        axios.post("http://localhost:8082/join", member)
             .then(res => {
                 if (res.data === true) {
                     setMessage("회원가입 성공!");
@@ -90,7 +92,7 @@ export default function Join() {
                         <Input type="text" name="id" id="id" value={member.id} onChange={memberEdit} />
                     </Col>
                     <Col sm={3}>
-                        <Button color="success">중복</Button>
+                        <Button color="success" onClick={checkId}>중복</Button>
                     </Col>
                 </FormGroup>
                 <FormGroup row>

@@ -35,7 +35,7 @@ const BoardDetail=()=>{
             setBoard({...resBoard});
             setHeart({...res.data.heart});
             if(resBoard.fileNums!==null && resBoard.fileNums.length !==0) {
-                setFileNumList([res.data.fileNums.split(",")]);
+                setFileNumList([...resBoard.fileNums.split(",")]);
             }
             
         })
