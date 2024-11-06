@@ -7,8 +7,9 @@ export const initState = {
         nickname:'',
         email:'',
         address:'',
-        profileImage:''
-    }
+        profileImage:'',
+        profileImageStr:''
+    },
 }
 export const boardReducer =(state=initState,action)=>{
     switch(action.type) {

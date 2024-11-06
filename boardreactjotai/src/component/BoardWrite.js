@@ -3,13 +3,14 @@ import {useState,useRef,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { url } from '../config';
-import{useSelector} from 'react-redux';
+import { useAtom } from 'jotai';
+import { userAtom } from '../atoms';
 
 const BoardWrite=()=>{
 
     const navigate = useNavigate();
     const fRef = useRef();
-    const user = useSelector(state=>state.persistedReducer.user);
+    const user = useAtom(userAtom); 
     const divStyle={
         margin:'0 auto',
         width:'600px',

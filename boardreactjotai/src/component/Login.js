@@ -2,12 +2,13 @@ import {Table,Label,Input,Button} from 'reactstrap';
 import {useState} from 'react';
 import axios from 'axios';
 import {url} from '../config';
-import {useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router';
+import {useAtom} from'jotai';
+import { userAtom } from '../atoms';
 const Login=()=>{
     const[member,setMember] = useState({id:'',password:''});
     const divStyle={margin:"0 auto",width:"400px",border:"1px solid lightgray",borderRadius:"7px",padding:"10px"};
-    const dispatch = useDispatch();
+    const [user,setUser] = useAtom(userAtom);
     const navigate = useNavigate();
     
     const edit=(e)=>{
@@ -17,7 +18,7 @@ const Login=()=>{
         axios.post(`${url}/login`,member)
         .then(res=>{
             console.log(res.data);
-            dispatch({type:"USER",data:{...res.data}});
+            setUser(res.data);
             navigate("/");
         })
         .catch(err=>{

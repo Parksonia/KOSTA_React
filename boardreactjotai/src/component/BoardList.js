@@ -9,7 +9,7 @@ const BoardList=()=>{
     const [pageBtn,setPageBtn] = useState([]);
     const [type,setType] = useState('');
     const [keyword,setKeyword] = useState('');
-
+    
     const boardDelete=(num)=>{
         axios.get(`${url}/boardDelete/${num}`)
         .then(res=>{

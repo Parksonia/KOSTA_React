@@ -1,27 +1,19 @@
-import { Navbar, Nav, NavItem, NavLink, NavbarBrand, NavbarToggler } from 'reactstrap'
-import { useDispatch, useSelector } from 'react-redux';
-import { initState } from './reducer';
-import { useNavigate } from 'react-router'
-const Main = () => {
-    const user = useSelector(state => state.persistedReducer.user);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const logout = (e) => {
-        e.preventDefault();
-        dispatch({ type: "USER", data: { ...initState.user} });
-        navigate("/");
+import{Navbar,Nav,NavItem,NavLink,NavbarBrand,NavbarToggler} from 'reactstrap'
+import {useAtom} from'jotai';
+import { initUser,userAtom } from '../atoms';
+const Main =() =>{
+    const[user,setUser] = useAtom(userAtom);
+    const logout =() =>{
+        setUser({...initUser});
     }
-
-    return (
+    return(
         <Navbar color='light' light expand="md">
             <NavbarBrand href='/' className='mr-auto'>
                 <i><b>kosta.com</b></i>
             </NavbarBrand>
-
+          
             <Nav navbar>
-     
-
-                {user.nickname !== '' ?
+            {user.nickname !== '' ?
                     <>
                      <NavItem>
                             <img src={user.profileImageStr !==undefined?"data:image/png;base64,"+user.profileImageStr :"/defaultPerson.png"} alt='' width="40px" style={{borderRadius:"10%"
@@ -55,4 +47,3 @@ const Main = () => {
 
 }
 export default Main;
-

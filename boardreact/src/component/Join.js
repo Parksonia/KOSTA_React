@@ -7,7 +7,7 @@ const Join=()=>{
     const divStyle={margin:"0 auto",width:"400px",border:"1px solid lightgray",borderRadius:"7px",padding:"10px"};
     
     const[member,setMember] =useState({id:'',name:'',password:'',email:'',address:'',nickname:''});
-    const[profile,setProfile]= useState('/defaultPerson.png');
+    const[profileImage,setProfileImage]= useState(null);
    
     
     const imgRef = useRef();
@@ -16,13 +16,18 @@ const Join=()=>{
         setMember({...member,[e.target.name]:e.target.value});
     }
     const pofileChange =(e) =>{
-        const reader = new FileReader();
-        const file = imgRef.current.files[0];
+        // const reader = new FileReader();
+        // const file = imgRef.current.files[0];
     
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-            setProfile(reader.result);
-        };
+        // reader.readAsDataURL(file);
+        // reader.onloadend = () => {
+        //     setProfileImage(reader.result);
+        // };
+        
+        if(e.target.files.length>0) {
+            setProfileImage(imgRef.current.files[0]);
+        }
+        
     }
 
     const submit=(e)=>{
@@ -34,7 +39,10 @@ const Join=()=>{
         formData.append("email",member.email);
         formData.append("address",member.address);
         formData.append("nickname",member.nickname);
-        formData.append("file",profile);
+        if(profileImage !=null){
+            formData.append("profile",profileImage);
+        }
+        
 
         axios.post(`${url}/join`,formData)
         .then(res=>{
@@ -60,6 +68,10 @@ const Join=()=>{
                         <td><Input type='text' name='name' id ="name" onChange={edit}></Input></td>
                     </tr>
                     <tr>
+                        <td><Label for='nickname'>닉네임</Label></td>
+                        <td><Input type='text' name='nickname' id ="nickname" onChange={edit}></Input></td>
+                    </tr>
+                    <tr>
                         <td><Label for='password'>비밀번호</Label></td>
                         <td><Input type='text' name='password' id ="password" onChange={edit}></Input></td>
                     </tr>
@@ -74,7 +86,7 @@ const Join=()=>{
                     <tr>
                         <td><Label for='profile'>프로필이미지</Label></td>
                         <td>
-                            <img src={profile} width="100px" height="100px" alt=''
+                            <img src={profileImage !==null? URL.createObjectURL(profileImage):'/defaultPerson.png'} width="100px" height="100px" alt=''
                             onClick={()=>imgRef.current.click()} /><br/><br/>
                             <input type='file' name='file' id ="file" onChange={pofileChange} hidden ref={imgRef} accept='image/*' />
                           
