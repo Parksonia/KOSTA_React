@@ -7,10 +7,11 @@ import {Table,Input,Button,Label} from 'reactstrap'
 const BoardModify=()=>{
     const {num} = useParams(); // 객체 타입으로 받아온 파라미터정보를 변수에저장함 
     const navigate = useNavigate();
-    const[board,setBoard] = useState({num:'',writer:'',subject:'',content:'',fileNums:''});
+    const[board,setBoard] = useState({num:'',writer:'',subject:'',content:'',fileNums:'',nickname:''});
     const[fileNumList,setFileNumList] = useState([]); //보여지는것
     const [fileList,setFileList] =useState([]); // 추가되는 것 
     const [fileDelList,setFileDelList] =useState([]); 
+ 
     const divStyle={
         margin:'0 auto',
         width:'600px',

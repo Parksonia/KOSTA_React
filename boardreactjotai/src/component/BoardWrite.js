@@ -3,14 +3,14 @@ import {useState,useRef,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { url } from '../config';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { userAtom } from '../atoms';
 
 const BoardWrite=()=>{
 
     const navigate = useNavigate();
     const fRef = useRef();
-    const user = useAtom(userAtom); 
+    const user = useAtomValue(userAtom); 
     const divStyle={
         margin:'0 auto',
         width:'600px',
@@ -73,7 +73,7 @@ const BoardWrite=()=>{
                             <Label for="writer">글쓴이</Label>
                         </td>
                         <td>
-                            <Input type="text" name="writer" value={user.nickname}  readOnly onChange={edit}/>
+                            <Input type="text" name="writer" value={user.nickname}  readOnly />
                         </td>
                     </tr>
                     <tr>
@@ -121,7 +121,7 @@ const BoardWrite=()=>{
                         <td></td>
                         <td>
                             <Button color="primary" onClick={submit}>등록</Button>&nbsp;&nbsp;
-                            <Button color="secondary" type="rest">취소</Button>
+                            <Button color="secondary" type="reset" onClick={()=>navigate("/")}>목록</Button>
                         </td>
                     </tr>
                 

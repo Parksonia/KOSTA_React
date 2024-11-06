@@ -3,12 +3,12 @@ import {useState,useEffect} from 'react'
 import axios from 'axios';
 import { url } from '../config';
 import {Table,Input,Button,Label} from 'reactstrap'
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { userAtom } from '../atoms';
 
 const BoardDetail=()=>{
     const {num} = useParams(); // 객체 타입으로 받아온 파라미터정보를 변수에저장함 
-    const user = useAtom(userAtom);
+    const user = useAtomValue(userAtom);
     const [board,setBoard] = useState({num:'',writer:'',subject:'',content:'',fileNums:'',nickname:''});
     const[fileNumList,setFileNumList] = useState([]);
     const divStyle={
@@ -56,7 +56,7 @@ const BoardDetail=()=>{
                     <tbody>
                         <tr>
                             <td><Label>작성자</Label></td>
-                            <td><Input type='text' readOnly value={board.writer}></Input></td>
+                            <td><Input type='text' readOnly value={user.nickname}></Input></td>
                         </tr>
                         <tr>
                             <td><Label>제목</Label></td>

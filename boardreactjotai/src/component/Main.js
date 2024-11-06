@@ -6,6 +6,8 @@ const Main =() =>{
     const logout =() =>{
         setUser({...initUser});
     }
+    
+
     return(
         <Navbar color='light' light expand="md">
             <NavbarBrand href='/' className='mr-auto'>

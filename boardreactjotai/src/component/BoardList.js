@@ -2,6 +2,9 @@ import {Col,Button,FormGroup,Input,Table,Pagination,PaginationItem,PaginationLin
 import { useEffect,useState } from 'react';
 import axios from 'axios';
 import { url } from '../config';
+import { useAtom, useAtomValue } from 'jotai';
+import { userAtom } from '../atoms';
+
 const BoardList=()=>{
     // 각각의 정보를 담을 변수 선언
     const [boardList,setBoardList] = useState([]); 
@@ -9,7 +12,7 @@ const BoardList=()=>{
     const [pageBtn,setPageBtn] = useState([]);
     const [type,setType] = useState('');
     const [keyword,setKeyword] = useState('');
-    
+    const [user,setUser] = useAtom(userAtom); 
     const boardDelete=(num)=>{
         axios.get(`${url}/boardDelete/${num}`)
         .then(res=>{
@@ -68,8 +71,10 @@ const BoardList=()=>{
                     <Button onClick={()=>submit(1)}>검색</Button>
                 </Col>
                 <Col sm={3}>
+                    {(user.nickname !=='') &&
                     <Button tag="a" href="/boardWrite" color='success'>글쓰기</Button>
-                </Col>
+                    }
+                    </Col>
             </FormGroup>
             <Table bordered style={{margin:"0 auto",width:"900px"}}>
                 
