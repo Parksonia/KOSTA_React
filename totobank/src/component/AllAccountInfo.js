@@ -6,7 +6,7 @@ export default function AllAccountInfo(){
     const [accs,setAccs] = useState([]);
     
     useEffect(()=>{ //화면이 뜨자마자 데이터가 있어야 하니까 useEffect 사용 반드시 [] 가 있어야함
-        axios.get("http://localhost:8080/allAccountInfo")
+        axios.get("http://3.34.139.32:8080/allAccountInfo")
         .then(res=>{
             console.log(res.data);
             setAccs([...res.data]);

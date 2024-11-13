@@ -11,7 +11,7 @@ export default function AccountInfo() { //default는 함수 앞에 사용 오직
     
     const submit =(e) =>{
         e.preventDefault();
-        axios.get(`http://localhost:8080/accountInfo/${acc.id}`)
+        axios.get(`http://3.34.139.32:8080/accountInfo/${acc.id}`)
         .then(res=>{
             console.log(res.data);
             setAcc({...res.data});

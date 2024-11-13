@@ -29,7 +29,7 @@ export default function Join() {
 
     const checkId =(e) =>{
         e.preventDefault();
-        axios.get(`http://localhost:8082/checkMemId/${member.id}`)
+        axios.get(`http://3.34.139.32:8080/checkMemId/${member.id}`)
         .then(res=>{
             if(res.data===true) {
                 alert("사용중인 아이디 입니다.");
@@ -59,7 +59,7 @@ export default function Join() {
         }
         
 
-        axios.post("http://localhost:8082/join", member)
+        axios.post("http://3.34.139.32:8080/join", member)
             .then(res => {
                 if (res.data === true) {
                     setMessage("회원가입 성공!");

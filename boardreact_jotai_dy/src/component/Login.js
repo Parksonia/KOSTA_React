@@ -11,8 +11,19 @@ const Login = () => {
     const [token, setToken] = useAtom(tokenAtom);
     const [user, setUser] = useAtom(userAtom);
     
-    const divStyle = {margin:"0 auto",width:'400px',border:"1px solid lightgray",borderRadius:'7px',padding:'10px'};
+    const divStyle={margin:"0 auto",width:"400px",border:"1px solid lightgray",borderRadius:"7px",padding:"10px"};
     const navigate = useNavigate();
+
+
+    
+    const redirectKakaoUri = "http://localhost:8080/oauth2/callback/kakao";
+    const restKakaoAuthKey ="d1e55a57c615ed931fe94c2d77ef5a3c";
+    const kakaoAuthUrl =`https://kauth.kakao.com/oauth/authorize?client_id=${restKakaoAuthKey}&redirect_uri=${redirectKakaoUri}&response_type=code`
+    
+    const redirectNaverUri = "http://localhost:8080/oauth2/callback/naver";
+    const restNaverAuthKey ="cN5KhLKCmZQ3KCGoyauD";
+    const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?client_id=${restNaverAuthKey}&redirect_uri=${redirectNaverUri}&response_type=code`;
+
 
     const edit = (e) => {
         setMember({...member, [e.target.name]:e.target.value});
@@ -48,13 +59,18 @@ const Login = () => {
             .then(res=> {
                 console.log(res.headers.authorization);
                 setToken(res.headers.authorization) // 토큰을 가져와서 atom sessionStorage에 저장 후
-                axios.get(`${url}/user`,{
+                axios.get(`${url}/user`,{ // user정보 
                     headers:{
-                        Authorization: res.headers.authorization
+                        Authorization:token
                     }
                 })
+                .then(res=>{
+                    setUser(res.data); //토큰으로 사용자 정보를 다시 요청
+                    navigate('/');
+                }).catch(err=>{
+                    console.log(err);
+                })
                 
-                serInfo(res.headers.authorization); //토큰으로 사용자 정보를 다시 요청
             })
             .catch(err=>{
                 console.log(err);
@@ -63,44 +79,36 @@ const Login = () => {
 
     return(
         <>
-            <div className="header-text">로그인</div>
-            <div style={divStyle}>
-                <Table borderless>
-                    <tbody>
-                        <tr>
-                            <td><Label for="id">아이디</Label></td>
-                            <td><Input type="text" name="username" id="username" onChange={edit}/></td>
-                        </tr>
-                        <tr>
-                            <td><Label for="password">비밀번호</Label></td>
-                            <td><Input type="password" name="password" id="password" onChange={edit}/></td>
-                        </tr>
-                        <tr>
-                            <td colSpan={2}>
-                                <Button color="primary" style={{width:"100%"}} onClick={submit}>로그인</Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <Label for="kakao">카카오로그인</Label>
-                            </td>
-                            <td>
-                                <a href={"http://localhost:8080/oauth2/authorization/kakao"}>
-                                    <img src="/kakao_login_medium_narrow.png" alt="" width="100px"/>
-                                </a>
-                            </td>
-                            <td>
-                                <Label for="naver">네이버로그인</Label>
-                            </td>
-                            <td>
-                                <a href={"http://localhost:8080/oauth2/authorization/naver"}>
-                                    <img src="/naver_login.png" alt="" width="100px" />
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </div>
+          <div className="header-text"> 로그인</div> 
+        <div style={divStyle}>
+            <Table borderless>
+                <tbody>
+                    <tr>
+                        <td><Label for="id">아이디</Label></td>
+                        <td><Input type='text'name='username' id='username' onChange={edit}></Input></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><Label for="password">비밀번호</Label></td>
+                        <td><Input type='text'name='password' id='password' onChange={edit}></Input></td>
+                    </tr>
+                
+                    <tr>
+                        <td></td>
+                        <td><Button onClick={submit}>로그인</Button></td>
+                    </tr>
+                    <tr>
+                        <td><Label for="kakao">카카오 로그인</Label></td>
+                        <td><a href={kakaoAuthUrl} alt=''><img src="./kakaologin.png" alt='kakao'/></a></td>
+                    </tr>
+                    
+                    <tr>
+                        <td><Label for="naver">네이버 로그인</Label></td>
+                        <td><a href={naverAuthUrl} alt=''><img src="./naverlogin.png"  alt='kakao'width={180}/></a></td>
+                    </tr>
+                </tbody>                   
+            </Table>
+        </div>
         </>
     )
 }

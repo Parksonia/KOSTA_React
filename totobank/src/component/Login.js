@@ -12,7 +12,7 @@ export default function Login() {
 
     const submit =(e)=>{
         e.preventDefault();
-        axios.post("http://localhost:8082/login",loginInfo)
+        axios.post("http://3.34.139.32:8080/login",loginInfo)
         .then(res=>{
             console.log(res.data);
             dispatch({type:'USER',data:{...res.data}}); //type이 user이면 initState..data가 res.data로 변경
